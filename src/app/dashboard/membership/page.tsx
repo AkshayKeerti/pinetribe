@@ -192,9 +192,9 @@ export default function Membership() {
             </p>
             
             <div className="bg-white rounded-lg p-4 mb-4">
-              <div className="text-3xl font-bold text-gray-900 mb-1">$29</div>
+              <div className="text-3xl font-bold text-gray-900 mb-1">€20</div>
               <div className="text-sm text-gray-600">per month</div>
-              <div className="text-xs text-green-600 mt-1">Save $58 annually</div>
+              <div className="text-xs text-green-600 mt-1">Save €40 annually</div>
             </div>
 
             <button

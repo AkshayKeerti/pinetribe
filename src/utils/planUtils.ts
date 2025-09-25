@@ -5,7 +5,7 @@ export const PLANS: Plan[] = [
     id: 'free',
     name: 'Free Explorer',
     tagline: 'Browse all activities, pay per session',
-    price: '$0',
+    price: '€0',
     features: [
       'View all PineTribe activities',
       'Book activities with per-session payment',
@@ -22,7 +22,7 @@ export const PLANS: Plan[] = [
     id: 'premium',
     name: 'Premium Tribe Member',
     tagline: 'Join all activities for free',
-    price: '€22/month',
+    price: '€20/month',
     features: [
       'Join ALL activities for FREE',
       'Join groups and community features',
