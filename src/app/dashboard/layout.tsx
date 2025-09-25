@@ -66,8 +66,8 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
               <Image
                 src="/pinetribe-green.png"
                 alt="PineTribe Logo"
-                width={200}
-                height={60}
+                width={120}
+                height={40}
                 className="h-10 w-auto"
                 priority
               />

@@ -62,8 +62,8 @@ export default function LoadingScreen({ onComplete, duration = 3000 }: LoadingSc
             <Image
               src="/pinetribe-white.png"
               alt="PineTribe Logo"
-              width={200}
-              height={60}
+              width={150}
+              height={48}
               className="h-12 w-auto"
               priority
             />
