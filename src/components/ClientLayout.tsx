@@ -7,13 +7,21 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // For now, always show loading screen for testing
-    // Later we can implement smart logic based on user preferences
-    const timer = setTimeout(() => {
+    // Check if loading screen has been shown in this session
+    const hasShownLoading = sessionStorage.getItem('pinetribe_loading_shown')
+    
+    if (hasShownLoading) {
+      // Skip loading screen if already shown in this session
       setIsLoading(false)
-    }, 3000)
+    } else {
+      // Show loading screen for first page load in this session
+      sessionStorage.setItem('pinetribe_loading_shown', 'true')
+      const timer = setTimeout(() => {
+        setIsLoading(false)
+      }, 3000)
 
-    return () => clearTimeout(timer)
+      return () => clearTimeout(timer)
+    }
   }, [])
 
   const handleLoadingComplete = () => {
