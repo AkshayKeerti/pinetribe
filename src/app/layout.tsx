@@ -21,16 +21,13 @@ export default function RootLayout({
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Check if this is the first visit
-    const hasVisited = localStorage.getItem('pinetribe_has_visited')
-    
-    if (hasVisited) {
-      // Skip loading screen for returning users
+    // For now, always show loading screen for testing
+    // Later we can implement smart logic based on user preferences
+    const timer = setTimeout(() => {
       setIsLoading(false)
-    } else {
-      // Show loading screen for first-time visitors
-      localStorage.setItem('pinetribe_has_visited', 'true')
-    }
+    }, 3000)
+
+    return () => clearTimeout(timer)
   }, [])
 
   const handleLoadingComplete = () => {
