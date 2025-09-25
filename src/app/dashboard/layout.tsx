@@ -48,7 +48,6 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   }, [pathname])
 
   const handleTabClick = (tab: any) => {
-    console.log('Tab clicked:', tab.id, tab.href) // Debug log
     setActiveTab(tab.id)
     router.push(tab.href)
   }

@@ -24,12 +24,16 @@ export default function Membership() {
     if (userData) {
       setUser(JSON.parse(userData))
     }
+  }, [])
 
-    // Generate QR code
+  useEffect(() => {
+    // Generate QR code only when user data is available
+    if (!user) return
+
     const generateQR = async () => {
       try {
         const qrData = {
-          userId: user?.email || 'demo@example.com',
+          userId: user.email || 'demo@example.com',
           membershipId: 'PT-2024-001',
           plan: currentPlan?.name || 'Free',
           expires: userPlan?.subscriptionEndDate || 'N/A'
