@@ -16,8 +16,7 @@ export default function Membership() {
     plan: currentPlan?.name || 'Free',
     renewalDate: userPlan?.subscriptionEndDate ? 
       new Date(userPlan.subscriptionEndDate).toLocaleDateString() : 'N/A',
-    perks: currentPlan?.features || [],
-    limitations: currentPlan?.limitations || []
+    perks: currentPlan?.features || []
   }
 
   useEffect(() => {
@@ -175,21 +174,6 @@ export default function Membership() {
           ))}
         </div>
       </div>
-
-      {/* Limitations for Free Plan */}
-      {!isPremium && membershipData.limitations.length > 0 && (
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Current Limitations</h3>
-          <div className="space-y-3">
-            {membershipData.limitations.map((limitation, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                <span className="text-gray-600">{limitation}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Upgrade Section */}
       {!isPremium && (
