@@ -70,7 +70,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Image
-                src="/pinetribe-green.png"
+                src="/pinetribe-green.svg"
                 alt="PineTribe Logo"
                 width={120}
                 height={32}
