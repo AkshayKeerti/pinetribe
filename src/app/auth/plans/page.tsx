@@ -81,21 +81,6 @@ export default function PlanSelection() {
                   ))}
                 </div>
               </div>
-
-              {/* Limitations for free plan */}
-              {plan.limitations.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <h4 className="font-semibold text-gray-900 mb-2">Limitations:</h4>
-                  <div className="space-y-1">
-                    {plan.limitations.map((limitation, index) => (
-                      <div key={index} className="flex items-center gap-3 text-gray-500">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                        <span className="text-sm">{limitation}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           ))}
         </div>
