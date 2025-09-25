@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { TreePine, User, Calendar, Trophy, Users, Settings, Home, Crown } from 'lucide-react'
 import { useRouter, usePathname } from 'next/navigation'
 import { PlanProvider, usePlan } from '@/contexts/PlanContext'
+import Image from 'next/image'
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -67,9 +68,15 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
       <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <TreePine className="w-8 h-8 text-forest-500" />
-              <span className="text-xl font-bold text-gray-900">PineTribe</span>
+            <div className="flex items-center">
+              <Image
+                src="/pinetribe-green.png"
+                alt="PineTribe Logo"
+                width={120}
+                height={32}
+                className="h-8 w-auto"
+                priority
+              />
             </div>
             
             <div className="flex items-center gap-3">

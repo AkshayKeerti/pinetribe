@@ -61,9 +61,15 @@ export default function Home() {
         <div className="pt-12">
           {/* PineTribe Logo */}
           <div className="flex items-center justify-center mb-16">
-            <div className="flex items-center gap-3 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
-              <TreePine className="w-8 h-8 text-white" />
-              <span className="font-bold text-white text-xl">PineTribe</span>
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
+              <Image
+                src="/pinetribe-white.png"
+                alt="PineTribe Logo"
+                width={120}
+                height={32}
+                className="h-8 w-auto"
+                priority
+              />
             </div>
           </div>
 
