@@ -60,11 +60,11 @@ export default function LoadingScreen({ onComplete, duration = 3000 }: LoadingSc
         <div className="mb-8">
           <div className="bg-white/20 backdrop-blur-sm rounded-full px-8 py-4">
             <Image
-              src="/pinetribe-white.svg"
+              src="/pinetribe-white.png"
               alt="PineTribe Logo"
-              width={160}
-              height={42}
-              className="h-10 w-auto"
+              width={200}
+              height={60}
+              className="h-12 w-auto"
               priority
             />
           </div>

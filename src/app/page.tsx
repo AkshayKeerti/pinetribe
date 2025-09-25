@@ -63,11 +63,11 @@ export default function Home() {
           <div className="flex items-center justify-center mb-16">
             <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
               <Image
-                src="/pinetribe-white.svg"
+                src="/pinetribe-white.png"
                 alt="PineTribe Logo"
-                width={120}
-                height={32}
-                className="h-8 w-auto"
+                width={200}
+                height={60}
+                className="h-12 w-auto"
                 priority
               />
             </div>

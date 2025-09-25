@@ -64,11 +64,11 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Image
-                src="/pinetribe-green.svg"
+                src="/pinetribe-green.png"
                 alt="PineTribe Logo"
-                width={120}
-                height={32}
-                className="h-8 w-auto"
+                width={200}
+                height={60}
+                className="h-10 w-auto"
                 priority
               />
             </div>
