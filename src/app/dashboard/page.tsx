@@ -78,11 +78,11 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-br from-forest-500 to-forest-700 rounded-3xl p-6 text-white">
-        <h1 className="text-2xl font-bold mb-2">
+      <div className="bg-gradient-to-br from-forest-500 to-forest-700 rounded-3xl p-4 sm:p-6 text-white">
+        <h1 className="text-xl sm:text-2xl font-bold mb-2">
           Welcome back, {user?.name?.split(' ')[0]}! 🌲
         </h1>
-        <p className="text-white/90">
+        <p className="text-white/90 text-sm sm:text-base">
           {isPremium ? 'Ready for your next adventure in nature?' : 'Book activities with payment or upgrade to Premium for free access!'}
         </p>
       </div>
@@ -90,15 +90,17 @@ export default function Dashboard() {
       {/* Premium Banner for Free Users */}
       {!isPremium && (
         <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-2xl p-4">
-          <div className="flex items-center gap-3">
-            <Crown className="w-6 h-6 text-yellow-600" />
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900">Upgrade to Premium</h3>
-              <p className="text-sm text-gray-600">Join all activities for free with Premium subscription</p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="flex items-center gap-3 flex-1">
+              <Crown className="w-6 h-6 text-yellow-600 flex-shrink-0" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900">Upgrade to Premium</h3>
+                <p className="text-sm text-gray-600">Join all activities for free with Premium subscription</p>
+              </div>
             </div>
             <button
               onClick={() => alert('Redirecting to upgrade page...')}
-              className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
+              className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors w-full sm:w-auto"
             >
               Upgrade
             </button>
@@ -150,42 +152,44 @@ export default function Dashboard() {
         <div className="space-y-4">
           {upcomingClasses.map((classItem) => (
             <div key={classItem.id} className="bg-white rounded-2xl p-4 shadow-sm">
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">{classItem.emoji}</div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-gray-900">
-                      {classItem.title}
-                    </h3>
-                    <span className="px-2 py-1 bg-forest-100 text-forest-700 text-xs font-medium rounded-full">
-                      {classItem.level}
-                    </span>
-                  </div>
-                  
-                  <div className="space-y-1 text-sm text-gray-600 mb-3">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      <span>{classItem.time} • {classItem.date}</span>
+              <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="text-3xl flex-shrink-0">{classItem.emoji}</div>
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                      <h3 className="font-semibold text-gray-900">
+                        {classItem.title}
+                      </h3>
+                      <span className="px-2 py-1 bg-forest-100 text-forest-700 text-xs font-medium rounded-full w-fit">
+                        {classItem.level}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4" />
-                      <span>{classItem.location}</span>
+                    
+                    <div className="space-y-1 text-sm text-gray-600 mb-3">
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 flex-shrink-0" />
+                        <span>{classItem.time} • {classItem.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 flex-shrink-0" />
+                        <span>{classItem.location}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4 flex-shrink-0" />
+                        <span>{classItem.spotsLeft} spots left</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
-                      <span>{classItem.spotsLeft} spots left</span>
+                    
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <span>Instructor:</span>
+                      <span className="font-medium">{classItem.instructor}</span>
+                      <Star className="w-4 h-4 text-yellow-400 fill-current flex-shrink-0" />
+                      <span className="text-yellow-600">4.9</span>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <span>Instructor:</span>
-                    <span className="font-medium">{classItem.instructor}</span>
-                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span className="text-yellow-600">4.9</span>
                   </div>
                 </div>
                 
-                <div className="flex flex-col items-end gap-2">
+                <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-end lg:items-end gap-2 sm:ml-4 lg:ml-0">
                   {isPremium ? (
                     <>
                       <div className="text-center">
@@ -194,7 +198,7 @@ export default function Dashboard() {
                       </div>
                       <button
                         onClick={() => handleBookClass(classItem.id)}
-                        className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300"
+                        className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300 w-full sm:w-auto"
                         disabled={classItem.spotsLeft === 0}
                       >
                         {classItem.spotsLeft === 0 ? 'Full' : 'Book'}
@@ -208,7 +212,7 @@ export default function Dashboard() {
                       </div>
                       <button
                         onClick={() => handleBookClass(classItem.id)}
-                        className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300"
+                        className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300 w-full sm:w-auto"
                         disabled={classItem.spotsLeft === 0}
                       >
                         {classItem.spotsLeft === 0 ? 'Full' : 'Book'}

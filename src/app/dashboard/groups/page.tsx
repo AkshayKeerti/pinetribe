@@ -148,9 +148,9 @@ export default function Groups() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="forest-gradient rounded-2xl p-8 text-white">
-        <h1 className="text-3xl font-bold mb-2">Find Your Tribe</h1>
-        <p className="text-white/90 text-lg">
+      <div className="forest-gradient rounded-2xl p-4 sm:p-6 lg:p-8 text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Find Your Tribe</h1>
+        <p className="text-white/90 text-base sm:text-lg">
           {isPremium ? 'Connect with like-minded people and build lasting friendships' : 'Browse groups and upgrade to join your tribe'}
         </p>
       </div>
@@ -158,15 +158,17 @@ export default function Groups() {
       {/* Premium Banner for Free Users */}
       {!isPremium && (
         <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-2xl p-4">
-          <div className="flex items-center gap-3">
-            <Crown className="w-6 h-6 text-yellow-600" />
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900">Upgrade to Premium</h3>
-              <p className="text-sm text-gray-600">Join groups, participate in icebreakers, and access all community features</p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="flex items-center gap-3 flex-1">
+              <Crown className="w-6 h-6 text-yellow-600 flex-shrink-0" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900">Upgrade to Premium</h3>
+                <p className="text-sm text-gray-600">Join groups, participate in icebreakers, and access all community features</p>
+              </div>
             </div>
             <button
               onClick={() => alert('Redirecting to upgrade page...')}
-              className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
+              className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors w-full sm:w-auto"
             >
               Upgrade
             </button>
@@ -224,10 +226,10 @@ export default function Groups() {
                 />
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={handleSendResponse}
-                  className="btn-primary flex items-center gap-2"
+                  className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto"
                   disabled={!response.trim()}
                 >
                   <Heart className="w-4 h-4" />
@@ -235,7 +237,7 @@ export default function Groups() {
                 </button>
                 <button
                   onClick={handleWave}
-                  className="btn-secondary flex items-center gap-2"
+                  className="btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto"
                 >
                   <Hand className="w-4 h-4" />
                   Send Wave 👋
@@ -265,10 +267,10 @@ export default function Groups() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200">
+      <div className="flex gap-1 sm:gap-2 border-b border-gray-200 overflow-x-auto">
         <button
           onClick={() => setActiveTab('my-groups')}
-          className={`px-4 py-2 font-medium transition-colors ${
+          className={`px-3 sm:px-4 py-2 font-medium transition-colors whitespace-nowrap text-sm sm:text-base ${
             activeTab === 'my-groups'
               ? 'text-forest-600 border-b-2 border-forest-600'
               : 'text-gray-600 hover:text-gray-900'
@@ -278,7 +280,7 @@ export default function Groups() {
         </button>
         <button
           onClick={() => setActiveTab('available')}
-          className={`px-4 py-2 font-medium transition-colors ${
+          className={`px-3 sm:px-4 py-2 font-medium transition-colors whitespace-nowrap text-sm sm:text-base ${
             activeTab === 'available'
               ? 'text-forest-600 border-b-2 border-forest-600'
               : 'text-gray-600 hover:text-gray-900'
@@ -293,25 +295,27 @@ export default function Groups() {
         <div className="space-y-6">
           {filteredMyGroups.map((group) => (
             <div key={group.id} className="card hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between">
+              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <h3 className="text-xl font-semibold text-gray-900">{group.name}</h3>
-                    <span className="px-2 py-1 bg-forest-100 text-forest-700 text-xs font-medium rounded-full">
-                      {group.activity}
-                    </span>
-                    {group.unreadMessages > 0 && (
-                      <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full">
-                        {group.unreadMessages} new
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900">{group.name}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-forest-100 text-forest-700 text-xs font-medium rounded-full">
+                        {group.activity}
                       </span>
-                    )}
+                      {group.unreadMessages > 0 && (
+                        <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full">
+                          {group.unreadMessages} new
+                        </span>
+                      )}
+                    </div>
                   </div>
                   
                   <p className="text-gray-600 mb-4">{group.description}</p>
                   
-                  <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600 mb-4">
                     <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
+                      <Users className="w-4 h-4 flex-shrink-0" />
                       <span>{group.members} members</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -326,16 +330,16 @@ export default function Groups() {
                   </div>
                 </div>
                 
-                <div className="ml-6 flex flex-col gap-2">
+                <div className="flex flex-col sm:flex-row lg:flex-col gap-2 lg:ml-6">
                   {isPremium ? (
                     <>
-                      <button className="btn-primary flex items-center gap-2">
+                      <button className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto lg:w-full">
                         <MessageCircle className="w-4 h-4" />
                         Chat
                       </button>
                       <button
                         onClick={() => handleLeaveGroup(group.id)}
-                        className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                        className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm w-full sm:w-auto lg:w-full"
                       >
                         Leave Group
                       </button>
@@ -346,7 +350,7 @@ export default function Groups() {
                       <p className="text-sm text-gray-600 mb-2">Premium Feature</p>
                       <button
                         onClick={() => alert('Upgrade to Premium to access group chat!')}
-                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
+                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors w-full"
                       >
                         Upgrade
                       </button>
@@ -364,20 +368,22 @@ export default function Groups() {
         <div className="space-y-6">
           {filteredAvailableGroups.map((group) => (
             <div key={group.id} className="card hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between">
+              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <h3 className="text-xl font-semibold text-gray-900">{group.name}</h3>
-                    <span className="px-2 py-1 bg-pine-100 text-pine-700 text-xs font-medium rounded-full">
-                      {group.activity}
-                    </span>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900">{group.name}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-pine-100 text-pine-700 text-xs font-medium rounded-full">
+                        {group.activity}
+                      </span>
+                    </div>
                   </div>
                   
                   <p className="text-gray-600 mb-4">{group.description}</p>
                   
-                  <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600 mb-4">
                     <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
+                      <Users className="w-4 h-4 flex-shrink-0" />
                       <span>{group.members} members</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -392,11 +398,11 @@ export default function Groups() {
                   </div>
                 </div>
                 
-                <div className="ml-6">
+                <div className="flex flex-col sm:flex-row lg:flex-col gap-2 lg:ml-6">
                   {isPremium ? (
                     <button
                       onClick={() => handleJoinGroup(group.id)}
-                      className="btn-primary flex items-center gap-2"
+                      className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto lg:w-full"
                     >
                       <Plus className="w-4 h-4" />
                       Join Group
@@ -407,7 +413,7 @@ export default function Groups() {
                       <p className="text-sm text-gray-600 mb-2">Premium Feature</p>
                       <button
                         onClick={() => handleJoinGroup(group.id)}
-                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors flex items-center gap-2 mx-auto"
+                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors flex items-center justify-center gap-2 w-full"
                       >
                         <Crown className="w-4 h-4" />
                         Upgrade to Join

@@ -96,12 +96,12 @@ export default function Membership() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-br from-forest-500 to-forest-700 rounded-3xl p-6 text-white">
+      <div className="bg-gradient-to-br from-forest-500 to-forest-700 rounded-3xl p-4 sm:p-6 text-white">
         <div className="flex items-center gap-3 mb-4">
-          <Crown className="w-8 h-8" />
-          <h1 className="text-2xl font-bold">Your Tribe Pass</h1>
+          <Crown className="w-6 h-6 sm:w-8 sm:h-8" />
+          <h1 className="text-xl sm:text-2xl font-bold">Your Tribe Pass</h1>
         </div>
-        <p className="text-white/90">
+        <p className="text-white/90 text-sm sm:text-base">
           {isPremium ? 'Premium membership with full access' : 'Free membership with pay-per-activity'}
         </p>
       </div>
@@ -138,17 +138,17 @@ export default function Membership() {
           <div className="text-sm font-medium text-gray-700 mb-3">Your Membership QR Code</div>
           {qrCodeDataUrl ? (
             <div className="inline-block p-4 bg-white border-2 border-gray-200 rounded-lg">
-              <img src={qrCodeDataUrl} alt="Membership QR Code" className="w-48 h-48" />
+              <img src={qrCodeDataUrl} alt="Membership QR Code" className="w-40 h-40 sm:w-48 sm:h-48" />
             </div>
           ) : (
-            <div className="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center mx-auto">
-              <div className="text-gray-400">Loading QR Code...</div>
+            <div className="w-40 h-40 sm:w-48 sm:h-48 bg-gray-100 rounded-lg flex items-center justify-center mx-auto">
+              <div className="text-gray-400 text-sm">Loading QR Code...</div>
             </div>
           )}
         </div>
 
         {/* QR Code Actions */}
-        <div className="flex gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <button
             onClick={handleDownloadQR}
             className="flex-1 flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
