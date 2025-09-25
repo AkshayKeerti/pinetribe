@@ -350,7 +350,7 @@ export default function Progress() {
                       {badge.rarity}
                     </div>
                     <div className="text-xs text-gray-500 mt-2">
-                      Earned {new Date(badge.earnedDate).toLocaleDateString()}
+                      Earned {badge.earnedDate ? new Date(badge.earnedDate).toLocaleDateString() : 'Recently'}
                     </div>
                   </div>
                 </div>
