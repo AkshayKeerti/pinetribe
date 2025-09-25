@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-beige-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-forest-500 hover:bg-forest-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-pine-500 hover:bg-pine-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6;
+  }
+  
+  .forest-gradient {
+    @apply bg-gradient-to-br from-forest-500 to-forest-700;
+  }
+  
+  .pine-gradient {
+    @apply bg-gradient-to-br from-pine-500 to-pine-700;
+  }
+}
