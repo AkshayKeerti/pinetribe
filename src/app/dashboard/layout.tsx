@@ -5,6 +5,7 @@ import { TreePine, User, Calendar, Trophy, Users, Settings, Home, Crown } from '
 import { useRouter, usePathname } from 'next/navigation'
 import { PlanProvider, usePlan } from '@/contexts/PlanContext'
 import Image from 'next/image'
+import LoadingScreen from '@/components/LoadingScreen'
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -52,14 +53,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   }
 
   if (!user) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-forest-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    )
+    return <LoadingScreen onComplete={() => {}} duration={2000} />
   }
 
   return (
