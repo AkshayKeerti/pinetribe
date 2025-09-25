@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { ArrowLeft, Check, Star, Zap } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { PLANS, PlanType } from '@/utils/planUtils'
+import { PLANS } from '@/utils/planUtils'
+import { PlanType } from '@/types/plan'
 
 export default function PlanSelection() {
   const router = useRouter()
