@@ -25,7 +25,15 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
     if (userData) {
       setUser(JSON.parse(userData))
     } else {
-      router.push('/')
+      // Check if user is coming from plans page (they might not have user data yet)
+      const userPlan = localStorage.getItem('pinetribe_user_plan')
+      if (userPlan) {
+        // User has a plan but no user data - redirect to signup to complete profile
+        router.push('/auth/signup')
+      } else {
+        // No user data and no plan - redirect to home
+        router.push('/')
+      }
     }
   }, [router])
 

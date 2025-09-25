@@ -91,17 +91,26 @@ export default function Signup() {
         </div>
 
           <div className="space-y-4 mb-8">
-            <button className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 rounded-2xl hover:border-forest-300 hover:bg-forest-50 transition-all">
+            <button 
+              onClick={() => setStep(1)}
+              className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 rounded-2xl hover:border-forest-300 hover:bg-forest-50 transition-all"
+            >
               <Mail className="w-6 h-6 text-gray-600" />
               <span className="font-semibold text-gray-900">Continue with Email</span>
             </button>
 
-            <button className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 rounded-2xl hover:border-forest-300 hover:bg-forest-50 transition-all">
+            <button 
+              onClick={() => setStep(1)}
+              className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 rounded-2xl hover:border-forest-300 hover:bg-forest-50 transition-all"
+            >
               <Apple className="w-6 h-6 text-gray-600" />
               <span className="font-semibold text-gray-900">Continue with Apple</span>
             </button>
 
-            <button className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 rounded-2xl hover:border-forest-300 hover:bg-forest-50 transition-all">
+            <button 
+              onClick={() => setStep(1)}
+              className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 rounded-2xl hover:border-forest-300 hover:bg-forest-50 transition-all"
+            >
               <Chrome className="w-6 h-6 text-gray-600" />
               <span className="font-semibold text-gray-900">Continue with Google</span>
             </button>
