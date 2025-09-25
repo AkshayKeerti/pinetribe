@@ -7,20 +7,20 @@ import { PlanProvider, usePlan } from '@/contexts/PlanContext'
 import Image from 'next/image'
 import LoadingScreen from '@/components/LoadingScreen'
 
+const navigation = [
+  { id: 'home', name: 'Home', href: '/dashboard', icon: Home },
+  { id: 'membership', name: 'Pass', href: '/dashboard/membership', icon: User },
+  { id: 'activities', name: 'Classes', href: '/dashboard/activities', icon: Calendar },
+  { id: 'progress', name: 'Progress', href: '/dashboard/progress', icon: Trophy },
+  { id: 'groups', name: 'Tribe', href: '/dashboard/groups', icon: Users },
+]
+
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const { userPlan, isPremium } = usePlan()
   const [user, setUser] = useState<any>(null)
   const [activeTab, setActiveTab] = useState('home')
-
-  const navigation = [
-    { id: 'home', name: 'Home', href: '/dashboard', icon: Home },
-    { id: 'membership', name: 'Pass', href: '/dashboard/membership', icon: User },
-    { id: 'activities', name: 'Classes', href: '/dashboard/activities', icon: Calendar },
-    { id: 'progress', name: 'Progress', href: '/dashboard/progress', icon: Trophy },
-    { id: 'groups', name: 'Tribe', href: '/dashboard/groups', icon: Users },
-  ]
 
   useEffect(() => {
     const userData = localStorage.getItem('pinetribe_user')
@@ -45,9 +45,10 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
     if (currentTab) {
       setActiveTab(currentTab.id)
     }
-  }, [pathname, navigation])
+  }, [pathname])
 
   const handleTabClick = (tab: any) => {
+    console.log('Tab clicked:', tab.id, tab.href) // Debug log
     setActiveTab(tab.id)
     router.push(tab.href)
   }
