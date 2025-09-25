@@ -10,45 +10,42 @@ export default function Dashboard() {
   const [upcomingClasses, setUpcomingClasses] = useState([
     {
       id: 1,
-      title: 'Self-Guided Yoga',
-      instructor: 'Unsupervised',
-      time: '7:00 AM',
-      date: 'Today',
-      location: 'Oak Grove',
-      level: 'Beginner',
-      spotsLeft: 15,
-      maxSpots: 20,
-      emoji: '🧘',
-      planType: 'free',
-      price: 8
-    },
-    {
-      id: 2,
       title: 'Morning Yoga Flow',
       instructor: 'Sarah Chen',
       time: '7:00 AM',
       date: 'Today',
-      location: 'Premium Oak Grove',
+      location: 'Oak Grove',
       level: 'Beginner',
       spotsLeft: 8,
       maxSpots: 12,
       emoji: '🧘',
-      planType: 'premium',
-      price: 0
+      price: 15
+    },
+    {
+      id: 2,
+      title: 'Forest Trail Run',
+      instructor: 'Mike Rodriguez',
+      time: '6:00 PM',
+      date: 'Today',
+      location: 'Pine Ridge Trail',
+      level: 'Intermediate',
+      spotsLeft: 5,
+      maxSpots: 15,
+      emoji: '🏃',
+      price: 12
     },
     {
       id: 3,
-      title: 'Trail Running',
-      instructor: 'Unsupervised',
-      time: '6:00 PM',
+      title: 'Sunset Circuit',
+      instructor: 'Emma Wilson',
+      time: '7:30 PM',
       date: 'Tomorrow',
-      location: 'Pine Ridge Trail',
-      level: 'Intermediate',
-      spotsLeft: 20,
-      maxSpots: 25,
-      emoji: '🏃',
-      planType: 'free',
-      price: 5
+      location: 'Meadow Clearing',
+      level: 'All Levels',
+      spotsLeft: 12,
+      maxSpots: 20,
+      emoji: '💪',
+      price: 18
     }
   ])
 
@@ -67,8 +64,14 @@ export default function Dashboard() {
   }, [])
 
   const handleBookClass = (classId: number) => {
-    // Mock booking
-    alert('Class booked successfully! Check your calendar.')
+    const classItem = upcomingClasses.find(c => c.id === classId)
+    if (classItem) {
+      if (isPremium) {
+        alert(`Class "${classItem.title}" booked successfully!\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nFree with Premium membership!`)
+      } else {
+        alert(`Class "${classItem.title}" booked successfully!\nCost: $${classItem.price}\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nPayment required to confirm booking.`)
+      }
+    }
   }
 
   return (
@@ -162,13 +165,27 @@ export default function Dashboard() {
                   </div>
                 </div>
                 
-                <button
-                  onClick={() => handleBookClass(classItem.id)}
-                  className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300"
-                  disabled={classItem.spotsLeft === 0}
-                >
-                  {classItem.spotsLeft === 0 ? 'Full' : 'Book'}
-                </button>
+                <div className="flex flex-col items-end gap-2">
+                  {isPremium ? (
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-green-600">Free</div>
+                      <div className="text-xs text-gray-600">with Premium</div>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-gray-900">${classItem.price}</div>
+                      <div className="text-xs text-gray-600">per session</div>
+                    </div>
+                  )}
+                  
+                  <button
+                    onClick={() => handleBookClass(classItem.id)}
+                    className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300"
+                    disabled={classItem.spotsLeft === 0}
+                  >
+                    {classItem.spotsLeft === 0 ? 'Full' : 'Book'}
+                  </button>
+                </div>
               </div>
             </div>
           ))}

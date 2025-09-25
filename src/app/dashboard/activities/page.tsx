@@ -12,8 +12,6 @@ export default function Activities() {
 
   const activities = [
     { value: 'all', label: 'All Activities' },
-    { value: 'free', label: 'Free Activities' },
-    { value: 'premium', label: 'Premium Activities' },
     { value: 'yoga', label: 'Yoga' },
     { value: 'running', label: 'Running' },
     { value: 'hiking', label: 'Hiking' },
@@ -24,74 +22,38 @@ export default function Activities() {
   const classes = [
     {
       id: 1,
-      title: 'Self-Guided Yoga',
-      instructor: 'Unsupervised',
+      title: 'Morning Yoga Flow',
+      instructor: 'Sarah Chen',
       time: '7:00 AM',
       duration: '60 min',
       location: 'Oak Grove',
       level: 'Beginner',
       type: 'yoga',
-      planType: 'free',
-      spotsLeft: 15,
-      maxSpots: 20,
-      rating: 4.2,
-      price: 8,
-      description: 'Practice yoga at your own pace in the peaceful oak grove.',
-      equipment: 'Yoga mat required'
-    },
-    {
-      id: 2,
-      title: 'Morning Yoga Flow',
-      instructor: 'Sarah Chen',
-      time: '7:00 AM',
-      duration: '60 min',
-      location: 'Premium Oak Grove',
-      level: 'Beginner',
-      type: 'yoga',
-      planType: 'premium',
       spotsLeft: 8,
       maxSpots: 12,
       rating: 4.9,
-      price: 0,
+      price: 15,
       description: 'Start your day with guided yoga flows led by our expert instructor.',
       equipment: 'Yoga mat provided'
     },
     {
-      id: 3,
-      title: 'Trail Running',
-      instructor: 'Unsupervised',
+      id: 2,
+      title: 'Forest Trail Run',
+      instructor: 'Mike Rodriguez',
       time: '6:00 PM',
       duration: '45 min',
       location: 'Pine Ridge Trail',
       level: 'Intermediate',
       type: 'running',
-      planType: 'free',
-      spotsLeft: 20,
-      maxSpots: 25,
-      rating: 4.1,
-      price: 5,
-      description: 'Run at your own pace through scenic forest trails.',
-      equipment: 'Running shoes required'
-    },
-    {
-      id: 4,
-      title: 'Forest Trail Run',
-      instructor: 'Mike Rodriguez',
-      time: '6:00 PM',
-      duration: '45 min',
-      location: 'Premium Pine Ridge',
-      level: 'Intermediate',
-      type: 'running',
-      planType: 'premium',
       spotsLeft: 5,
       maxSpots: 15,
       rating: 4.8,
-      price: 0,
+      price: 12,
       description: 'Guided trail run with pace coaching and technique tips.',
       equipment: 'Running shoes provided'
     },
     {
-      id: 5,
+      id: 3,
       title: 'Sunset Circuit',
       instructor: 'Emma Wilson',
       time: '7:30 PM',
@@ -99,16 +61,15 @@ export default function Activities() {
       location: 'Meadow Clearing',
       level: 'All Levels',
       type: 'circuit',
-      planType: 'premium',
       spotsLeft: 12,
       maxSpots: 20,
       rating: 4.7,
-      price: 0,
+      price: 18,
       description: 'High-energy circuit training as the sun sets over the meadow.',
       equipment: 'All equipment provided'
     },
     {
-      id: 6,
+      id: 4,
       title: 'Mountain Hike',
       instructor: 'Alex Thompson',
       time: '9:00 AM',
@@ -116,16 +77,15 @@ export default function Activities() {
       location: 'Summit Trail',
       level: 'Advanced',
       type: 'hiking',
-      planType: 'premium',
       spotsLeft: 3,
       maxSpots: 10,
       rating: 4.9,
-      price: 0,
+      price: 25,
       description: 'Challenging hike to the mountain summit with breathtaking views.',
       equipment: 'Hiking boots, water bottle'
     },
     {
-      id: 7,
+      id: 5,
       title: 'Tribe Social',
       instructor: 'Community',
       time: '6:30 PM',
@@ -133,16 +93,15 @@ export default function Activities() {
       location: 'Fire Pit Area',
       level: 'All Levels',
       type: 'social',
-      planType: 'premium',
       spotsLeft: 25,
       maxSpots: 30,
       rating: 4.8,
-      price: 0,
+      price: 10,
       description: 'Weekly social gathering with games, food, and community bonding.',
       equipment: 'None required'
     },
     {
-      id: 8,
+      id: 6,
       title: 'Meditation Circle',
       instructor: 'Luna Park',
       time: '8:00 AM',
@@ -150,21 +109,49 @@ export default function Activities() {
       location: 'Zen Garden',
       level: 'All Levels',
       type: 'yoga',
-      planType: 'premium',
       spotsLeft: 15,
       maxSpots: 20,
       rating: 4.9,
-      price: 0,
+      price: 8,
       description: 'Guided meditation in our peaceful zen garden setting.',
       equipment: 'Cushions provided'
+    },
+    {
+      id: 7,
+      title: 'Sunrise Yoga',
+      instructor: 'Maya Patel',
+      time: '6:30 AM',
+      duration: '75 min',
+      location: 'Lake View',
+      level: 'Intermediate',
+      type: 'yoga',
+      spotsLeft: 6,
+      maxSpots: 15,
+      rating: 4.9,
+      price: 20,
+      description: 'Energizing morning yoga session with stunning lake views.',
+      equipment: 'Yoga mat provided'
+    },
+    {
+      id: 8,
+      title: 'Night Trail Run',
+      instructor: 'Jake Morrison',
+      time: '8:00 PM',
+      duration: '60 min',
+      location: 'Moonlight Trail',
+      level: 'Advanced',
+      type: 'running',
+      spotsLeft: 4,
+      maxSpots: 12,
+      rating: 4.8,
+      price: 22,
+      description: 'Adventure run under the stars with headlamps provided.',
+      equipment: 'Headlamps provided'
     }
   ]
 
   const filteredClasses = classes.filter(classItem => {
-    const matchesActivity = selectedActivity === 'all' || 
-                           classItem.type === selectedActivity ||
-                           (selectedActivity === 'free' && classItem.planType === 'free') ||
-                           (selectedActivity === 'premium' && classItem.planType === 'premium')
+    const matchesActivity = selectedActivity === 'all' || classItem.type === selectedActivity
     const matchesSearch = classItem.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          classItem.instructor.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          classItem.location.toLowerCase().includes(searchQuery.toLowerCase())
@@ -174,21 +161,16 @@ export default function Activities() {
   const handleBookClass = (classId: number) => {
     const classItem = classes.find(c => c.id === classId)
     if (classItem) {
-      if (classItem.planType === 'premium' && !isPremium) {
-        alert('This is a Premium activity. Upgrade to Premium to access instructor-led classes!')
-        return
-      }
-      
-      if (classItem.planType === 'free') {
-        alert(`Booked: ${classItem.title}\nCost: $${classItem.price}\nTime: ${classItem.time}\nLocation: ${classItem.location}`)
+      if (isPremium) {
+        alert(`Booked: ${classItem.title}\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nFree with Premium membership!`)
       } else {
-        alert(`Booked: ${classItem.title}\nTime: ${classItem.time}\nLocation: ${classItem.location}`)
+        alert(`Booked: ${classItem.title}\nCost: $${classItem.price}\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nPayment required to confirm booking.`)
       }
     }
   }
 
   const handleUpgrade = () => {
-    alert('Upgrade to Premium to unlock all instructor-led classes and premium features!')
+    alert('Upgrade to Premium to join all activities for free!')
   }
 
   return (
@@ -197,7 +179,7 @@ export default function Activities() {
       <div className="bg-gradient-to-br from-forest-500 to-forest-700 rounded-3xl p-6 text-white">
         <h1 className="text-2xl font-bold mb-2">PineTribe Sessions</h1>
         <p className="text-white/90">
-          {isPremium ? 'Access all activities' : 'Choose from free activities or upgrade for more'}
+          {isPremium ? 'Join any activity for free with Premium!' : 'Browse all activities - pay per session or upgrade to Premium'}
         </p>
       </div>
 
@@ -207,8 +189,8 @@ export default function Activities() {
           <div className="flex items-center gap-3">
             <Crown className="w-6 h-6 text-yellow-600" />
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-900">Unlock Premium Features</h3>
-              <p className="text-sm text-gray-600">Get unlimited access to instructor-led classes</p>
+              <h3 className="font-semibold text-gray-900">Upgrade to Premium</h3>
+              <p className="text-sm text-gray-600">Join all activities for free with monthly subscription</p>
             </div>
             <button
               onClick={handleUpgrade}
@@ -270,18 +252,6 @@ export default function Activities() {
                   <h3 className="font-semibold text-gray-900">
                     {classItem.title}
                   </h3>
-                  {classItem.planType === 'premium' ? (
-                    <div className="flex items-center gap-1">
-                      <Crown className="w-4 h-4 text-yellow-500" />
-                      <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">
-                        Premium
-                      </span>
-                    </div>
-                  ) : (
-                    <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
-                      Free
-                    </span>
-                  )}
                   <span className="px-2 py-1 bg-forest-100 text-forest-700 text-xs font-medium rounded-full">
                     {classItem.level}
                   </span>
@@ -318,35 +288,23 @@ export default function Activities() {
               </div>
               
               <div className="flex flex-col gap-2">
-                {classItem.planType === 'free' ? (
-                  <div className="text-center">
-                    <div className="text-lg font-bold text-gray-900">${classItem.price}</div>
-                    <div className="text-xs text-gray-600">per session</div>
-                  </div>
-                ) : (
+                {isPremium ? (
                   <div className="text-center">
                     <div className="text-lg font-bold text-green-600">Free</div>
                     <div className="text-xs text-gray-600">with Premium</div>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-gray-900">${classItem.price}</div>
+                    <div className="text-xs text-gray-600">per session</div>
                   </div>
                 )}
                 
                 <button
                   onClick={() => handleBookClass(classItem.id)}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    classItem.planType === 'premium' && !isPremium
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-forest-600 text-white hover:bg-forest-700'
-                  }`}
-                  disabled={classItem.planType === 'premium' && !isPremium}
+                  className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors"
                 >
-                  {classItem.planType === 'premium' && !isPremium ? (
-                    <div className="flex items-center gap-1">
-                      <Lock className="w-4 h-4" />
-                      <span>Premium</span>
-                    </div>
-                  ) : (
-                    'Book Now'
-                  )}
+                  Book Now
                 </button>
 
                 {classItem.spotsLeft > 0 && classItem.spotsLeft <= 3 && (
