@@ -32,9 +32,9 @@ export default function Settings() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="forest-gradient rounded-2xl p-8 text-white">
-        <h1 className="text-3xl font-bold mb-2">Settings</h1>
-        <p className="text-white/90 text-lg">
+      <div className="forest-gradient rounded-2xl p-4 sm:p-6 lg:p-8 text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Settings</h1>
+        <p className="text-white/90 text-base sm:text-lg">
           Manage your account and preferences
         </p>
       </div>
