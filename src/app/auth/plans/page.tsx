@@ -58,26 +58,14 @@ export default function PlanSelection() {
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                  <p className="text-gray-600">{plan.description}</p>
+                  <p className="text-gray-600">{plan.tagline}</p>
                 </div>
                 
                 <div className="text-right">
-                  {plan.price.monthly ? (
-                    <div>
-                      <div className="text-3xl font-bold text-gray-900">${plan.price.monthly}</div>
-                      <div className="text-sm text-gray-600">per month</div>
-                      {plan.price.annual && (
-                        <div className="text-xs text-green-600 mt-1">
-                          Save ${(plan.price.monthly * 12) - plan.price.annual} annually
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div>
-                      <div className="text-3xl font-bold text-gray-900">Free</div>
-                      <div className="text-sm text-gray-600">${plan.price.perActivity} per activity</div>
-                    </div>
-                  )}
+                  <div className="text-3xl font-bold text-gray-900">{plan.price}</div>
+                  <div className="text-sm text-gray-600">
+                    {plan.id === 'free' ? 'per activity' : 'per month'}
+                  </div>
                 </div>
               </div>
 
