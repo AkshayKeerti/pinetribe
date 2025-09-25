@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowLeft, Mail, Apple, Chrome, User, Camera, ChevronRight, Check } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -8,6 +8,7 @@ import Image from 'next/image'
 export default function Signup() {
   const router = useRouter()
   const [step, setStep] = useState(0)
+  const [selectedPlan, setSelectedPlan] = useState<'free' | 'premium'>('free')
   const [formData, setFormData] = useState({
     email: '',
     name: '',
@@ -15,6 +16,14 @@ export default function Signup() {
     fitnessLevel: '',
     interests: [] as string[]
   })
+
+  // Get selected plan from localStorage
+  useEffect(() => {
+    const savedPlan = localStorage.getItem('selected_plan')
+    if (savedPlan) {
+      setSelectedPlan(savedPlan as 'free' | 'premium')
+    }
+  }, [])
 
   const fitnessLevels = [
     { value: 'beginner', label: 'Beginner', description: 'New to outdoor fitness', icon: '🌱' },
@@ -57,8 +66,25 @@ export default function Signup() {
   }
 
   const handleSubmit = () => {
-    // Mock authentication - store user data
-    localStorage.setItem('pinetribe_user', JSON.stringify(formData))
+    // Mock authentication - store user data with plan info
+    const userData = {
+      ...formData,
+      planType: selectedPlan,
+      subscriptionStatus: selectedPlan === 'premium' ? 'active' : 'inactive',
+      activitiesUsed: 0,
+      subscriptionEndDate: selectedPlan === 'premium' ? 
+        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : undefined
+    }
+    
+    localStorage.setItem('pinetribe_user', JSON.stringify(userData))
+    localStorage.setItem('pinetribe_user_plan', JSON.stringify({
+      planType: selectedPlan,
+      subscriptionStatus: selectedPlan === 'premium' ? 'active' : 'inactive',
+      activitiesUsed: 0,
+      subscriptionEndDate: selectedPlan === 'premium' ? 
+        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : undefined
+    }))
+    
     router.push('/dashboard')
   }
 
@@ -78,10 +104,13 @@ export default function Signup() {
 
         {/* Content */}
         <div className="px-6 pb-6">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-3">Join PineTribe</h1>
-            <p className="text-gray-600 text-lg">Choose how you'd like to sign up</p>
+        <div className="text-center mb-8">
+          <div className="inline-block px-4 py-2 bg-forest-100 text-forest-700 rounded-full text-sm font-medium mb-4">
+            {selectedPlan === 'free' ? '🆓 Free Plan' : '⭐ Premium Plan'}
           </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-3">Join PineTribe</h1>
+          <p className="text-gray-600 text-lg">Choose how you'd like to sign up</p>
+        </div>
 
           <div className="space-y-4 mb-8">
             <button className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 rounded-2xl hover:border-forest-300 hover:bg-forest-50 transition-all">

@@ -1,46 +1,54 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Calendar, Clock, MapPin, Users, Star, ChevronRight } from 'lucide-react'
+import { Calendar, Clock, MapPin, Users, Star, ChevronRight, Crown, Zap } from 'lucide-react'
+import { usePlan } from '@/contexts/PlanContext'
 
 export default function Dashboard() {
+  const { isPremium } = usePlan()
   const [user, setUser] = useState<any>(null)
   const [upcomingClasses, setUpcomingClasses] = useState([
     {
       id: 1,
-      title: 'Morning Yoga Flow',
-      instructor: 'Sarah Chen',
+      title: 'Self-Guided Yoga',
+      instructor: 'Unsupervised',
       time: '7:00 AM',
       date: 'Today',
       location: 'Oak Grove',
       level: 'Beginner',
-      spotsLeft: 8,
-      maxSpots: 12,
-      emoji: '🧘'
+      spotsLeft: 15,
+      maxSpots: 20,
+      emoji: '🧘',
+      planType: 'free',
+      price: 8
     },
     {
       id: 2,
-      title: 'Forest Trail Run',
-      instructor: 'Mike Rodriguez',
+      title: 'Morning Yoga Flow',
+      instructor: 'Sarah Chen',
+      time: '7:00 AM',
+      date: 'Today',
+      location: 'Premium Oak Grove',
+      level: 'Beginner',
+      spotsLeft: 8,
+      maxSpots: 12,
+      emoji: '🧘',
+      planType: 'premium',
+      price: 0
+    },
+    {
+      id: 3,
+      title: 'Trail Running',
+      instructor: 'Unsupervised',
       time: '6:00 PM',
       date: 'Tomorrow',
       location: 'Pine Ridge Trail',
       level: 'Intermediate',
-      spotsLeft: 5,
-      maxSpots: 15,
-      emoji: '🏃'
-    },
-    {
-      id: 3,
-      title: 'Sunset Circuit',
-      instructor: 'Emma Wilson',
-      time: '7:30 PM',
-      date: 'Friday',
-      location: 'Meadow Clearing',
-      level: 'All Levels',
-      spotsLeft: 12,
-      maxSpots: 20,
-      emoji: '💪'
+      spotsLeft: 20,
+      maxSpots: 25,
+      emoji: '🏃',
+      planType: 'free',
+      price: 5
     }
   ])
 

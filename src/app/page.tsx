@@ -32,13 +32,13 @@ export default function Home() {
     if (currentStep < onboardingSteps.length - 1) {
       setCurrentStep(currentStep + 1)
     } else {
-      // Navigate to signup
-      window.location.href = '/auth/signup'
+      // Navigate to plan selection
+      window.location.href = '/auth/plans'
     }
   }
 
   const handleSkip = () => {
-    window.location.href = '/auth/signup'
+    window.location.href = '/auth/plans'
   }
 
   return (

@@ -1,16 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { TreePine, User, Calendar, Trophy, Users, Settings, Home } from 'lucide-react'
+import { TreePine, User, Calendar, Trophy, Users, Settings, Home, Crown } from 'lucide-react'
 import { useRouter, usePathname } from 'next/navigation'
+import { PlanProvider, usePlan } from '@/contexts/PlanContext'
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+function DashboardContent({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
+  const { userPlan, isPremium } = usePlan()
   const [user, setUser] = useState<any>(null)
   const [activeTab, setActiveTab] = useState('home')
 
@@ -70,6 +68,16 @@ export default function DashboardLayout({
               <div className="text-right">
                 <p className="text-sm font-semibold text-gray-900">{user.name}</p>
                 <p className="text-xs text-gray-500">{user.email}</p>
+                <div className="flex items-center gap-1 mt-1">
+                  {isPremium ? (
+                    <div className="flex items-center gap-1">
+                      <Crown className="w-3 h-3 text-yellow-500" />
+                      <span className="text-xs text-yellow-600 font-medium">Premium</span>
+                    </div>
+                  ) : (
+                    <span className="text-xs text-gray-500">Free Plan</span>
+                  )}
+                </div>
               </div>
               <div className="w-10 h-10 bg-forest-100 rounded-full flex items-center justify-center">
                 <User className="w-6 h-6 text-forest-600" />
@@ -108,5 +116,17 @@ export default function DashboardLayout({
         </div>
       </nav>
     </div>
+  )
+}
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <PlanProvider>
+      <DashboardContent>{children}</DashboardContent>
+    </PlanProvider>
   )
 }
