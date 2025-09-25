@@ -1,9 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Users, MessageCircle, Hand, Heart, Plus, Search, Filter } from 'lucide-react'
+import { Users, MessageCircle, Hand, Heart, Plus, Search, Filter, Lock, Crown } from 'lucide-react'
+import { usePlan } from '@/contexts/PlanContext'
+import { canAccessFeature } from '@/utils/planUtils'
 
 export default function Groups() {
+  const { userPlan, isPremium } = usePlan()
   const [activeTab, setActiveTab] = useState('my-groups')
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -98,14 +101,26 @@ export default function Groups() {
   const [response, setResponse] = useState('')
 
   const handleJoinGroup = (groupId: number) => {
+    if (!userPlan || !canAccessFeature(userPlan, 'join_group')) {
+      alert('Upgrade to Premium to join groups and access community features!')
+      return
+    }
     alert('Successfully joined the group! Welcome to the tribe! 🌲')
   }
 
   const handleLeaveGroup = (groupId: number) => {
+    if (!userPlan || !canAccessFeature(userPlan, 'join_group')) {
+      alert('Upgrade to Premium to manage group memberships!')
+      return
+    }
     alert('You have left the group. You can rejoin anytime!')
   }
 
   const handleSendResponse = () => {
+    if (!userPlan || !canAccessFeature(userPlan, 'icebreaker_social')) {
+      alert('Upgrade to Premium to participate in community icebreakers!')
+      return
+    }
     if (response.trim()) {
       alert('Response shared! Your tribe members will see it. 🌟')
       setResponse('')
@@ -113,6 +128,10 @@ export default function Groups() {
   }
 
   const handleWave = () => {
+    if (!userPlan || !canAccessFeature(userPlan, 'send_wave')) {
+      alert('Upgrade to Premium to send waves and interact with your tribe!')
+      return
+    }
     alert('Wave sent! 👋 Your tribe members will see your friendly greeting.')
   }
 
@@ -132,62 +151,98 @@ export default function Groups() {
       <div className="forest-gradient rounded-2xl p-8 text-white">
         <h1 className="text-3xl font-bold mb-2">Find Your Tribe</h1>
         <p className="text-white/90 text-lg">
-          Connect with like-minded people and build lasting friendships
+          {isPremium ? 'Connect with like-minded people and build lasting friendships' : 'Browse groups and upgrade to join your tribe'}
         </p>
       </div>
+
+      {/* Premium Banner for Free Users */}
+      {!isPremium && (
+        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-2xl p-4">
+          <div className="flex items-center gap-3">
+            <Crown className="w-6 h-6 text-yellow-600" />
+            <div className="flex-1">
+              <h3 className="font-semibold text-gray-900">Upgrade to Premium</h3>
+              <p className="text-sm text-gray-600">Join groups, participate in icebreakers, and access all community features</p>
+            </div>
+            <button
+              onClick={() => alert('Redirecting to upgrade page...')}
+              className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
+            >
+              Upgrade
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Icebreaker Section */}
       <div className="card">
         <div className="flex items-center gap-3 mb-6">
           <Heart className="w-6 h-6 text-pine-600" />
           <h2 className="text-xl font-semibold text-gray-900">Break the Pinecone 🌲✨</h2>
+          {!isPremium && <Lock className="w-5 h-5 text-gray-400" />}
         </div>
 
         <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Choose a prompt to share with your tribe:
-            </label>
-            <select
-              value={selectedPrompt}
-              onChange={(e) => setSelectedPrompt(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest-500 focus:border-transparent"
-            >
-              {icebreakerPrompts.map((prompt, index) => (
-                <option key={index} value={prompt}>{prompt}</option>
-              ))}
-            </select>
-          </div>
+          {!isPremium ? (
+            <div className="text-center py-8">
+              <Lock className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Premium Feature</h3>
+              <p className="text-gray-600 mb-4">Upgrade to Premium to participate in icebreaker activities and connect with your tribe</p>
+              <button
+                onClick={() => alert('Redirecting to upgrade page...')}
+                className="bg-yellow-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-600 transition-colors"
+              >
+                Upgrade to Premium
+              </button>
+            </div>
+          ) : (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Choose a prompt to share with your tribe:
+                </label>
+                <select
+                  value={selectedPrompt}
+                  onChange={(e) => setSelectedPrompt(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest-500 focus:border-transparent"
+                >
+                  {icebreakerPrompts.map((prompt, index) => (
+                    <option key={index} value={prompt}>{prompt}</option>
+                  ))}
+                </select>
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Your response:
-            </label>
-            <textarea
-              value={response}
-              onChange={(e) => setResponse(e.target.value)}
-              placeholder="Share your thoughts..."
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest-500 focus:border-transparent h-24 resize-none"
-            />
-          </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Your response:
+                </label>
+                <textarea
+                  value={response}
+                  onChange={(e) => setResponse(e.target.value)}
+                  placeholder="Share your thoughts..."
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest-500 focus:border-transparent h-24 resize-none"
+                />
+              </div>
 
-          <div className="flex gap-3">
-            <button
-              onClick={handleSendResponse}
-              className="btn-primary flex items-center gap-2"
-              disabled={!response.trim()}
-            >
-              <Heart className="w-4 h-4" />
-              Share Response
-            </button>
-            <button
-              onClick={handleWave}
-              className="btn-secondary flex items-center gap-2"
-            >
-              <Hand className="w-4 h-4" />
-              Send Wave 👋
-            </button>
-          </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleSendResponse}
+                  className="btn-primary flex items-center gap-2"
+                  disabled={!response.trim()}
+                >
+                  <Heart className="w-4 h-4" />
+                  Share Response
+                </button>
+                <button
+                  onClick={handleWave}
+                  className="btn-secondary flex items-center gap-2"
+                >
+                  <Hand className="w-4 h-4" />
+                  Send Wave 👋
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -272,16 +327,31 @@ export default function Groups() {
                 </div>
                 
                 <div className="ml-6 flex flex-col gap-2">
-                  <button className="btn-primary flex items-center gap-2">
-                    <MessageCircle className="w-4 h-4" />
-                    Chat
-                  </button>
-                  <button
-                    onClick={() => handleLeaveGroup(group.id)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-                  >
-                    Leave Group
-                  </button>
+                  {isPremium ? (
+                    <>
+                      <button className="btn-primary flex items-center gap-2">
+                        <MessageCircle className="w-4 h-4" />
+                        Chat
+                      </button>
+                      <button
+                        onClick={() => handleLeaveGroup(group.id)}
+                        className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                      >
+                        Leave Group
+                      </button>
+                    </>
+                  ) : (
+                    <div className="text-center">
+                      <Lock className="w-6 h-6 text-gray-400 mx-auto mb-2" />
+                      <p className="text-sm text-gray-600 mb-2">Premium Feature</p>
+                      <button
+                        onClick={() => alert('Upgrade to Premium to access group chat!')}
+                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
+                      >
+                        Upgrade
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -323,13 +393,27 @@ export default function Groups() {
                 </div>
                 
                 <div className="ml-6">
-                  <button
-                    onClick={() => handleJoinGroup(group.id)}
-                    className="btn-primary flex items-center gap-2"
-                  >
-                    <Plus className="w-4 h-4" />
-                    Join Group
-                  </button>
+                  {isPremium ? (
+                    <button
+                      onClick={() => handleJoinGroup(group.id)}
+                      className="btn-primary flex items-center gap-2"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Join Group
+                    </button>
+                  ) : (
+                    <div className="text-center">
+                      <Lock className="w-6 h-6 text-gray-400 mx-auto mb-2" />
+                      <p className="text-sm text-gray-600 mb-2">Premium Feature</p>
+                      <button
+                        onClick={() => handleJoinGroup(group.id)}
+                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors flex items-center gap-2 mx-auto"
+                      >
+                        <Crown className="w-4 h-4" />
+                        Upgrade to Join
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -341,15 +425,32 @@ export default function Groups() {
       <div className="card text-center">
         <div className="py-8">
           <div className="w-16 h-16 bg-forest-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Plus className="w-8 h-8 text-forest-600" />
+            {isPremium ? (
+              <Plus className="w-8 h-8 text-forest-600" />
+            ) : (
+              <Lock className="w-8 h-8 text-gray-400" />
+            )}
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">Don't see your tribe?</h3>
           <p className="text-gray-600 mb-6">
-            Create your own group and invite others to join your adventure
+            {isPremium 
+              ? 'Create your own group and invite others to join your adventure'
+              : 'Upgrade to Premium to create your own group and invite others'
+            }
           </p>
-          <button className="btn-primary">
-            Create New Group
-          </button>
+          {isPremium ? (
+            <button className="btn-primary">
+              Create New Group
+            </button>
+          ) : (
+            <button
+              onClick={() => alert('Upgrade to Premium to create groups!')}
+              className="bg-yellow-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-yellow-600 transition-colors flex items-center gap-2 mx-auto"
+            >
+              <Crown className="w-5 h-5" />
+              Upgrade to Create Group
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -8,9 +8,9 @@ export const PLANS: Plan[] = [
     price: '$0',
     features: [
       'View all PineTribe activities',
-      'Pay per session when you join',
-      'Access to community features',
-      'Basic progress tracking'
+      'Browse groups and community content',
+      'Basic progress tracking',
+      'Upgrade to join groups and activities'
     ],
     buttonText: 'Start Free',
     buttonClass: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
@@ -24,6 +24,7 @@ export const PLANS: Plan[] = [
     price: '$29/month',
     features: [
       'Join ALL activities for FREE',
+      'Join groups and community features',
       'No per-session payments',
       'Priority booking',
       'Guest passes for friends',
@@ -52,8 +53,17 @@ export const canAccessFeature = (userPlan: UserPlan, feature: string): boolean =
     return true
   }
   
-  // Free tier can view all activities but needs to pay per session
-  return true
+  // Free tier restrictions
+  const restrictedFeatures = [
+    'join_group',
+    'book_activity', 
+    'icebreaker_social',
+    'group_chat',
+    'create_group',
+    'send_wave'
+  ]
+  
+  return !restrictedFeatures.includes(feature)
 }
 
 export const getUpgradeMessage = (currentPlan: PlanType): string => {

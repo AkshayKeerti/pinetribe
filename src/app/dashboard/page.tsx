@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Calendar, Clock, MapPin, Users, Star, ChevronRight, Crown, Zap } from 'lucide-react'
+import { Calendar, Clock, MapPin, Users, Star, ChevronRight, Crown, Zap, Lock } from 'lucide-react'
 import { usePlan } from '@/contexts/PlanContext'
+import { canAccessFeature } from '@/utils/planUtils'
 
 export default function Dashboard() {
-  const { isPremium } = usePlan()
+  const { userPlan, isPremium } = usePlan()
   const [user, setUser] = useState<any>(null)
   const [upcomingClasses, setUpcomingClasses] = useState([
     {
@@ -65,12 +66,17 @@ export default function Dashboard() {
 
   const handleBookClass = (classId: number) => {
     const classItem = upcomingClasses.find(c => c.id === classId)
-    if (classItem) {
-      if (isPremium) {
-        alert(`Class "${classItem.title}" booked successfully!\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nFree with Premium membership!`)
-      } else {
-        alert(`Class "${classItem.title}" booked successfully!\nCost: $${classItem.price}\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nPayment required to confirm booking.`)
-      }
+    if (!classItem) return
+    
+    if (!userPlan || !canAccessFeature(userPlan, 'book_activity')) {
+      alert('Upgrade to Premium to book activities and join classes!')
+      return
+    }
+    
+    if (isPremium) {
+      alert(`Class "${classItem.title}" booked successfully!\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nFree with Premium membership!`)
+    } else {
+      alert(`Class "${classItem.title}" booked successfully!\nCost: $${classItem.price}\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nPayment required to confirm booking.`)
     }
   }
 
@@ -82,9 +88,28 @@ export default function Dashboard() {
           Welcome back, {user?.name?.split(' ')[0]}! 🌲
         </h1>
         <p className="text-white/90">
-          Ready for your next adventure in nature?
+          {isPremium ? 'Ready for your next adventure in nature?' : 'Browse activities and upgrade to join your tribe!'}
         </p>
       </div>
+
+      {/* Premium Banner for Free Users */}
+      {!isPremium && (
+        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-2xl p-4">
+          <div className="flex items-center gap-3">
+            <Crown className="w-6 h-6 text-yellow-600" />
+            <div className="flex-1">
+              <h3 className="font-semibold text-gray-900">Upgrade to Premium</h3>
+              <p className="text-sm text-gray-600">Join activities, groups, and access all community features</p>
+            </div>
+            <button
+              onClick={() => alert('Redirecting to upgrade page...')}
+              className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
+            >
+              Upgrade
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 gap-4">
@@ -167,24 +192,34 @@ export default function Dashboard() {
                 
                 <div className="flex flex-col items-end gap-2">
                   {isPremium ? (
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-green-600">Free</div>
-                      <div className="text-xs text-gray-600">with Premium</div>
-                    </div>
+                    <>
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-green-600">Free</div>
+                        <div className="text-xs text-gray-600">with Premium</div>
+                      </div>
+                      <button
+                        onClick={() => handleBookClass(classItem.id)}
+                        className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300"
+                        disabled={classItem.spotsLeft === 0}
+                      >
+                        {classItem.spotsLeft === 0 ? 'Full' : 'Book'}
+                      </button>
+                    </>
                   ) : (
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-gray-900">${classItem.price}</div>
-                      <div className="text-xs text-gray-600">per session</div>
-                    </div>
+                    <>
+                      <div className="text-center">
+                        <Lock className="w-6 h-6 text-gray-400 mx-auto mb-2" />
+                        <div className="text-sm text-gray-600 mb-2">Premium Feature</div>
+                      </div>
+                      <button
+                        onClick={() => handleBookClass(classItem.id)}
+                        className="bg-yellow-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-yellow-600 transition-colors flex items-center gap-2"
+                      >
+                        <Crown className="w-4 h-4" />
+                        Upgrade to Book
+                      </button>
+                    </>
                   )}
-                  
-                  <button
-                    onClick={() => handleBookClass(classItem.id)}
-                    className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300"
-                    disabled={classItem.spotsLeft === 0}
-                  >
-                    {classItem.spotsLeft === 0 ? 'Full' : 'Book'}
-                  </button>
                 </div>
               </div>
             </div>
