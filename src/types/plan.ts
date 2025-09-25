@@ -5,16 +5,13 @@ export type SubscriptionStatus = 'active' | 'inactive' | 'cancelled' | 'trial'
 export interface Plan {
   id: PlanType
   name: string
-  description: string
-  price: {
-    monthly?: number
-    annual?: number
-    perActivity?: number
-  }
+  tagline: string
+  price: string
   features: string[]
-  limitations: string[]
+  buttonText: string
+  buttonClass: string
+  icon: string
   color: string
-  popular?: boolean
 }
 
 export interface UserPlan {
