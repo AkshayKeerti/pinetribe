@@ -8,9 +8,10 @@ export const PLANS: Plan[] = [
     price: '$0',
     features: [
       'View all PineTribe activities',
+      'Book activities with per-session payment',
       'Browse groups and community content',
       'Basic progress tracking',
-      'Upgrade to join groups and activities'
+      'Upgrade to join groups and get free activities'
     ],
     buttonText: 'Start Free',
     buttonClass: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
@@ -21,7 +22,7 @@ export const PLANS: Plan[] = [
     id: 'premium',
     name: 'Premium Tribe Member',
     tagline: 'Join all activities for free',
-    price: '$29/month',
+    price: '€22/month',
     features: [
       'Join ALL activities for FREE',
       'Join groups and community features',
@@ -56,7 +57,6 @@ export const canAccessFeature = (userPlan: UserPlan, feature: string): boolean =
   // Free tier restrictions
   const restrictedFeatures = [
     'join_group',
-    'book_activity', 
     'icebreaker_social',
     'group_chat',
     'create_group',

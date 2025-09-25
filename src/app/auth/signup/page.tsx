@@ -8,7 +8,6 @@ import Image from 'next/image'
 export default function Signup() {
   const router = useRouter()
   const [step, setStep] = useState(0)
-  const [selectedPlan, setSelectedPlan] = useState<'free' | 'premium'>('free')
   const [formData, setFormData] = useState({
     email: '',
     name: '',
@@ -16,14 +15,6 @@ export default function Signup() {
     fitnessLevel: '',
     interests: [] as string[]
   })
-
-  // Get selected plan from localStorage
-  useEffect(() => {
-    const savedPlan = localStorage.getItem('selected_plan')
-    if (savedPlan) {
-      setSelectedPlan(savedPlan as 'free' | 'premium')
-    }
-  }, [])
 
   const fitnessLevels = [
     { value: 'beginner', label: 'Beginner', description: 'New to outdoor fitness', icon: '🌱' },
@@ -66,26 +57,16 @@ export default function Signup() {
   }
 
   const handleSubmit = () => {
-    // Mock authentication - store user data with plan info
+    // Mock authentication - store user data without plan info
     const userData = {
       ...formData,
-      planType: selectedPlan,
-      subscriptionStatus: selectedPlan === 'premium' ? 'active' : 'inactive',
-      activitiesUsed: 0,
-      subscriptionEndDate: selectedPlan === 'premium' ? 
-        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : undefined
+      activitiesUsed: 0
     }
     
     localStorage.setItem('pinetribe_user', JSON.stringify(userData))
-    localStorage.setItem('pinetribe_user_plan', JSON.stringify({
-      planType: selectedPlan,
-      subscriptionStatus: selectedPlan === 'premium' ? 'active' : 'inactive',
-      activitiesUsed: 0,
-      subscriptionEndDate: selectedPlan === 'premium' ? 
-        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : undefined
-    }))
     
-    router.push('/dashboard')
+    // Redirect to plan selection after user creation
+    router.push('/auth/plans')
   }
 
   if (step === 0) {
@@ -105,9 +86,6 @@ export default function Signup() {
         {/* Content */}
         <div className="px-6 pb-6">
         <div className="text-center mb-8">
-          <div className="inline-block px-4 py-2 bg-forest-100 text-forest-700 rounded-full text-sm font-medium mb-4">
-            {selectedPlan === 'free' ? '🆓 Free Plan' : '⭐ Premium Plan'}
-          </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-3">Join PineTribe</h1>
           <p className="text-gray-600 text-lg">Choose how you'd like to sign up</p>
         </div>

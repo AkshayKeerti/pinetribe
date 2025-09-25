@@ -11,9 +11,22 @@ export default function PlanSelection() {
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('free')
 
   const handleContinue = () => {
-    // Store selected plan and proceed to signup
+    // Store selected plan and create user plan
     localStorage.setItem('selected_plan', selectedPlan)
-    router.push('/auth/signup')
+    
+    // Create user plan data
+    const userPlan = {
+      planType: selectedPlan,
+      subscriptionStatus: selectedPlan === 'premium' ? 'active' : 'inactive',
+      activitiesUsed: 0,
+      subscriptionEndDate: selectedPlan === 'premium' ? 
+        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : undefined
+    }
+    
+    localStorage.setItem('pinetribe_user_plan', JSON.stringify(userPlan))
+    
+    // Proceed to dashboard
+    router.push('/dashboard')
   }
 
   return (
@@ -26,14 +39,14 @@ export default function PlanSelection() {
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
-        <div className="text-sm text-gray-500">Choose Your Plan</div>
+        <div className="text-sm text-gray-500">Complete Your Setup</div>
       </div>
 
       {/* Content */}
       <div className="px-6 pb-6">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">Choose Your Adventure</h1>
-          <p className="text-gray-600 text-lg">Select the plan that fits your fitness journey</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-3">Choose Your Plan</h1>
+          <p className="text-gray-600 text-lg">Select the plan that works best for you</p>
         </div>
 
         {/* Plan Cards */}
@@ -90,7 +103,7 @@ export default function PlanSelection() {
           onClick={handleContinue}
           className="w-full bg-forest-600 text-white font-semibold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 text-lg shadow-lg hover:bg-forest-700 transition-all"
         >
-          Continue with {selectedPlan === 'free' ? 'Free' : 'Premium'}
+          Complete Setup
           <Zap className="w-5 h-5" />
         </button>
 

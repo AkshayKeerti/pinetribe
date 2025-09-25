@@ -68,15 +68,10 @@ export default function Dashboard() {
     const classItem = upcomingClasses.find(c => c.id === classId)
     if (!classItem) return
     
-    if (!userPlan || !canAccessFeature(userPlan, 'book_activity')) {
-      alert('Upgrade to Premium to book activities and join classes!')
-      return
-    }
-    
     if (isPremium) {
       alert(`Class "${classItem.title}" booked successfully!\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nFree with Premium membership!`)
     } else {
-      alert(`Class "${classItem.title}" booked successfully!\nCost: $${classItem.price}\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nPayment required to confirm booking.`)
+      alert(`Class "${classItem.title}" booked successfully!\nCost: €${classItem.price}\nTime: ${classItem.time}\nLocation: ${classItem.location}\n\nPayment required to confirm booking.`)
     }
   }
 
@@ -88,7 +83,7 @@ export default function Dashboard() {
           Welcome back, {user?.name?.split(' ')[0]}! 🌲
         </h1>
         <p className="text-white/90">
-          {isPremium ? 'Ready for your next adventure in nature?' : 'Browse activities and upgrade to join your tribe!'}
+          {isPremium ? 'Ready for your next adventure in nature?' : 'Book activities with payment or upgrade to Premium for free access!'}
         </p>
       </div>
 
@@ -99,7 +94,7 @@ export default function Dashboard() {
             <Crown className="w-6 h-6 text-yellow-600" />
             <div className="flex-1">
               <h3 className="font-semibold text-gray-900">Upgrade to Premium</h3>
-              <p className="text-sm text-gray-600">Join activities, groups, and access all community features</p>
+              <p className="text-sm text-gray-600">Join all activities for free with Premium subscription</p>
             </div>
             <button
               onClick={() => alert('Redirecting to upgrade page...')}
@@ -208,15 +203,15 @@ export default function Dashboard() {
                   ) : (
                     <>
                       <div className="text-center">
-                        <Lock className="w-6 h-6 text-gray-400 mx-auto mb-2" />
-                        <div className="text-sm text-gray-600 mb-2">Premium Feature</div>
+                        <div className="text-lg font-bold text-gray-900">€{classItem.price}</div>
+                        <div className="text-xs text-gray-600">per session</div>
                       </div>
                       <button
                         onClick={() => handleBookClass(classItem.id)}
-                        className="bg-yellow-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-yellow-600 transition-colors flex items-center gap-2"
+                        className="bg-forest-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-forest-700 transition-colors disabled:bg-gray-300"
+                        disabled={classItem.spotsLeft === 0}
                       >
-                        <Crown className="w-4 h-4" />
-                        Upgrade to Book
+                        {classItem.spotsLeft === 0 ? 'Full' : 'Book'}
                       </button>
                     </>
                   )}
