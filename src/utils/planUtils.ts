@@ -33,7 +33,8 @@ export const PLANS: Plan[] = [
     buttonText: 'Go Premium',
     buttonClass: 'bg-forest-600 text-white hover:bg-forest-700',
     icon: '👑',
-    color: 'text-yellow-600'
+    color: 'text-yellow-600',
+    popular: true
   }
 ]
 

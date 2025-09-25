@@ -12,6 +12,7 @@ export interface Plan {
   buttonClass: string
   icon: string
   color: string
+  popular?: boolean
 }
 
 export interface UserPlan {
