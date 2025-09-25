@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { TreePine, User, Calendar, Trophy, Users, Settings, Home } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 export default function DashboardLayout({
   children,
@@ -10,8 +10,17 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   const router = useRouter()
+  const pathname = usePathname()
   const [user, setUser] = useState<any>(null)
   const [activeTab, setActiveTab] = useState('home')
+
+  const navigation = [
+    { id: 'home', name: 'Home', href: '/dashboard', icon: Home },
+    { id: 'membership', name: 'Pass', href: '/dashboard/membership', icon: User },
+    { id: 'activities', name: 'Classes', href: '/dashboard/activities', icon: Calendar },
+    { id: 'progress', name: 'Progress', href: '/dashboard/progress', icon: Trophy },
+    { id: 'groups', name: 'Tribe', href: '/dashboard/groups', icon: Users },
+  ]
 
   useEffect(() => {
     const userData = localStorage.getItem('pinetribe_user')
@@ -22,13 +31,13 @@ export default function DashboardLayout({
     }
   }, [router])
 
-  const navigation = [
-    { id: 'home', name: 'Home', href: '/dashboard', icon: Home },
-    { id: 'membership', name: 'Pass', href: '/dashboard/membership', icon: User },
-    { id: 'activities', name: 'Classes', href: '/dashboard/activities', icon: Calendar },
-    { id: 'progress', name: 'Progress', href: '/dashboard/progress', icon: Trophy },
-    { id: 'groups', name: 'Tribe', href: '/dashboard/groups', icon: Users },
-  ]
+  // Update active tab based on current pathname
+  useEffect(() => {
+    const currentTab = navigation.find(tab => tab.href === pathname)
+    if (currentTab) {
+      setActiveTab(currentTab.id)
+    }
+  }, [pathname, navigation])
 
   const handleTabClick = (tab: any) => {
     setActiveTab(tab.id)
